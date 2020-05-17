@@ -4,6 +4,8 @@ public class Member {
 	int memberId;
 	String memberUserId;
 	String memberPW;
+	String memberPlayNumber;
+	String memberWinRate;
 	
 	public Member() {
 		
@@ -22,7 +24,13 @@ public class Member {
 		this.memberUserId = memberUserId;
 		this.memberPW = memberPW;
 	}
+	
 
+	public Member(String memberPlayNumber, String memberWinRate, int memberId) {
+		this.memberId = memberId;
+		this.memberPlayNumber = memberPlayNumber;
+		this.memberWinRate = memberWinRate;
+	}
 
 	public int getMemberId() {
 		return memberId;
@@ -43,6 +51,22 @@ public class Member {
 		this.memberPW = memberPW;
 	}
 
+	
+	public String getMemberPlayNumber() {
+		return memberPlayNumber;
+	}
+
+	public void setMemberPlayNumber(String memberPlayNumber) {
+		this.memberPlayNumber = memberPlayNumber;
+	}
+
+	public String getMemberWinRate() {
+		return memberWinRate;
+	}
+
+	public void setMemberWinRate(String memberWinRate) {
+		this.memberWinRate = memberWinRate;
+	}
 
 	@Override
 	public String toString() {

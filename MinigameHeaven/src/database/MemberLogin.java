@@ -6,7 +6,8 @@ public class MemberLogin {
 	Scanner scn = new Scanner(System.in);
 	MemberService service = new MemberServiceImpl();
 
-	public void loginExecute() {
+	public int loginExecute() {
+		int checkLogin = 0;
 		System.out.println("-------------Login-------------");
 		while (true) {
 			
@@ -14,14 +15,14 @@ public class MemberLogin {
 			String userid = scn.nextLine();
 			System.out.print("INSERT Password > ");
 			String userpw = scn.nextLine();
-			int checkLoginFail = login(userid, userpw);
-			if(checkLoginFail == 1) {
+			checkLogin = login(userid, userpw);
+			if(checkLogin != 0) {
 				break;
-			}else if(checkLoginFail == 2){
+			}else if(checkLogin == 0){
 				System.out.println("Login fail check ID or PassWord");
 			}
 		}
-		
+		return checkLogin;
 	}
 
 	public int login(String userid, String userpw) {

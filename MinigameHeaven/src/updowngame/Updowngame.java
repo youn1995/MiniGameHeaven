@@ -72,10 +72,11 @@ public class Updowngame {
 		}
 	}
 
-	void playGame() {
+	int playGame() {
 		int userSelectNum = 0;
 		int minNum = 1;
 		int maxNum = selectRange;
+		int score = 0;
 
 		for (int i = 1; i <= attemptNumber; i++) {
 			System.out.println();
@@ -86,6 +87,7 @@ public class Updowngame {
 			int talkBackNum = upDownTalkBack(userSelectNum);
 			System.out.println("-----------------------------------------");
 			if (comThinkNum == userSelectNum) {
+				score = 1;
 				break;
 			}
 			if (selectLevel == 1 || selectLevel == 2) { // 힌트제공
@@ -104,15 +106,21 @@ public class Updowngame {
 		}
 
 		if (comThinkNum != userSelectNum) { // 정답을 못 맞추면 출력
+			score = 0;
 			System.out.println("YOU LOSE ANSER IS " + comThinkNum);
-		} 
+		}
+		return score;
 	}
 
-	void execute() {
+	int[] execute() {
+		int scoreSum = 0;
+		int playtime = 0;
+		int score = 0;
 		while (true) {
 			System.out.println("ENTER RANGE YOU WANT TO PLAY");
 			System.out.print("INSERT (BETWEEN 1 AND 2,147,483,647) : ");
 			int userSelRange = 0;
+			
 			while (true) {
 				try {
 					userSelRange = scn.nextInt();
@@ -128,7 +136,9 @@ public class Updowngame {
 			comThinkNumCreate(userSelRange);
 			attemptNumberCreate(userSelRange);
 			chooseLevel();
-			playGame();
+			score = playGame();
+			scoreSum = scoreSum + score;
+			playtime ++;
 			
 			System.out.println("DO YOU WANT TO RETRY?");
 			System.out.println("1.YES 2.NO");
@@ -138,7 +148,11 @@ public class Updowngame {
 				break;
 			}
 		}
+		int[] totalResult = new int[2];
+		totalResult[0] = playtime;
+		totalResult[1] = scoreSum;
 		System.out.println("PROGRAM END");
+		return totalResult;
 	}
 
 }// end of class

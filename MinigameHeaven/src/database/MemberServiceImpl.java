@@ -32,9 +32,9 @@ public class MemberServiceImpl implements MemberService {
 		Member member1 = dao.findMember(userid, userpw);
 		if (member1 != null) {
 			System.out.println("Hello "+ member1.getMemberUserId());
-			return 1;
+			return member1.getMemberId();
 		} else {
-			return 2;
+			return 0;
 		}
 
 	}

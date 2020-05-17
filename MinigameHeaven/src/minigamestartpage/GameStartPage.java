@@ -5,7 +5,7 @@ import updowngame.UpDownGameApp;
 
 public class GameStartPage {
 
-	public void gameList() {
+	public void gameList(int memId) {
 		while (true) {
 			System.out.println("-------------------------");
 			System.out.println("1.Updown");
@@ -15,7 +15,7 @@ public class GameStartPage {
 			System.out.print("Enter Number > ");
 			int userSel = CheckInput.checkGameListUserInput();
 			if (userSel == 1) {
-				UpDownGameApp updowngame = new UpDownGameApp();
+				UpDownGameApp updowngame = new UpDownGameApp(memId);
 				updowngame.gameStart();
 			} else if (userSel == 2) {
 				ThirtyOneGameApp thirtyonegame = new ThirtyOneGameApp();

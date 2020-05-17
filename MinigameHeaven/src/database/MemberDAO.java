@@ -102,4 +102,17 @@ public class MemberDAO {
 		return members[0];
 	}
 	
+	public void updateMemberRate(Member member) {
+		String sql = String.format("update member set mem_playtime = '%s' where mem_id = %d",
+				member.getMemberPW(), member.getMemberId());
+		conn = getConnect();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			int r = pstmt.executeUpdate();
+			System.out.println(r + " Row has been updated");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
