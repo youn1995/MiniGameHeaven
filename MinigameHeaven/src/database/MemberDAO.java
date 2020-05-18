@@ -6,11 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 public class MemberDAO {
 	Connection conn = null;
 	PreparedStatement pstmt = null;
-	
+
 	public Member[] getMemberList() {
 		Member[] members = new Member[100];
 		String sql = "select * from member";
@@ -20,8 +19,7 @@ public class MemberDAO {
 			ResultSet rs = pstmt.executeQuery();
 			int i = 0;
 			while (rs.next()) {
-				Member member = new Member(rs.getInt("mem_id"), rs.getString("mem_userid"),
-						rs.getString("mem_passwd"));
+				Member member = new Member(rs.getInt("mem_id"), rs.getString("mem_userid"), rs.getString("mem_passwd"));
 				members[i++] = member;
 			}
 		} catch (SQLException e) {
@@ -30,8 +28,9 @@ public class MemberDAO {
 		System.out.println("Check completed");
 		return members;
 	}
+
 	public Connection getConnect() {
-		String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, "hr", "hr");
@@ -42,9 +41,9 @@ public class MemberDAO {
 		}
 		return conn;
 	}
-	
+
 	public void insertMember(Member member) {
-		String sql = String.format("insert into member values(member_id_seq.nextval,lower('%s'),'%s')",
+		String sql = String.format("insert into member values(mem_id_seq.nextval,lower('%s'),'%s',default,default)",
 				member.getMemberUserId(), member.getMemberPW());
 		conn = getConnect();
 		try {
@@ -56,9 +55,10 @@ public class MemberDAO {
 		}
 
 	}
+
 	public void updateMember(Member member) {
-		String sql = String.format("update member set mem_passwd = '%s' where mem_id = %d",
-				member.getMemberPW(), member.getMemberId());
+		String sql = String.format("update member set mem_passwd = '%s' where mem_id = %d", member.getMemberPW(),
+				member.getMemberId());
 		conn = getConnect();
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -68,7 +68,7 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void deleteMember(String userId) {
 		String sql = String.format("delete from member where mem_userid = lower('(%s)')", userId);
 		conn = getConnect();
@@ -81,19 +81,18 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Member findMember(String userid, String userpw) {
 		Member[] members = new Member[100];
-		String sql = String.format("select * from member where mem_userid = lower('%s') and mem_passwd = '%s'",
-									userid, userpw);
+		String sql = String.format("select * from member where mem_userid = lower('%s') and mem_passwd = '%s'", userid,
+				userpw);
 		conn = getConnect();
 		try {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			int i = 0;
 			while (rs.next()) {
-				Member member = new Member(rs.getInt("mem_id"), rs.getString("mem_userid"),
-						rs.getString("mem_passwd"));
+				Member member = new Member(rs.getInt("mem_id"), rs.getString("mem_userid"), rs.getString("mem_passwd"));
 				members[i++] = member;
 			}
 		} catch (SQLException e) {
@@ -101,11 +100,32 @@ public class MemberDAO {
 		}
 		return members[0];
 	}
-	
-	public void updateMemberRate(Member member) {
-		String sql = String.format("update member set mem_playtime = '%s' where mem_id = %d",
-				member.getMemberPW(), member.getMemberId());
+
+	public void updateMemberRate(int memberId, int memberPlaytime, int memberWinRate) {
+		Member[] members = new Member[1];
+		int originPlaytime = 0;
+		int originWinrate = 0;
 		conn = getConnect();
+		String sql3 = String.format("select mem_id, mem_playtime, mem_winrate from member where mem_id = %d", memberId);
+		try {
+			pstmt = conn.prepareStatement(sql3);
+			ResultSet rs = pstmt.executeQuery();
+			int i = 0;
+			while (rs.next()) {
+				Member member = new Member(rs.getInt("mem_id"), rs.getInt("mem_playtime"), rs.getInt("mem_winrate"));
+				members[i++] = member;
+				i++;
+			}
+			originPlaytime = members[0].getMemberPlayNumber();
+			originWinrate = members[0].getMemberWinRate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		String sql = String.format("update member set mem_playtime = '%s' where mem_id = %d",
+				originPlaytime + memberPlaytime, memberId);
+		String sql2 = String.format("update member set mem_winrate = '%s' where mem_id = %d",
+				originWinrate + memberWinRate, memberId);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			int r = pstmt.executeUpdate();
@@ -113,6 +133,13 @@ public class MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		try {
+			pstmt = conn.prepareStatement(sql2);
+			int r = pstmt.executeUpdate();
+			System.out.println(r + " Row has been updated");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 }

@@ -39,4 +39,9 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
+	@Override
+	public void updatingPlaytime(int memid, int playtime, int winrate) {
+		dao.updateMemberRate(memid, playtime, winrate);
+	}
+
 }

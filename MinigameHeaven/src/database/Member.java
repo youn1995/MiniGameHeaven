@@ -4,8 +4,8 @@ public class Member {
 	int memberId;
 	String memberUserId;
 	String memberPW;
-	String memberPlayNumber;
-	String memberWinRate;
+	int memberPlayNumber;
+	int memberWinRate;
 	
 	public Member() {
 		
@@ -24,9 +24,10 @@ public class Member {
 		this.memberUserId = memberUserId;
 		this.memberPW = memberPW;
 	}
-	
 
-	public Member(String memberPlayNumber, String memberWinRate, int memberId) {
+
+	public Member(int memberId, int memberPlayNumber, int memberWinRate) {
+		super();
 		this.memberId = memberId;
 		this.memberPlayNumber = memberPlayNumber;
 		this.memberWinRate = memberWinRate;
@@ -52,19 +53,19 @@ public class Member {
 	}
 
 	
-	public String getMemberPlayNumber() {
+	public int getMemberPlayNumber() {
 		return memberPlayNumber;
 	}
 
-	public void setMemberPlayNumber(String memberPlayNumber) {
+	public void setMemberPlayNumber(int memberPlayNumber) {
 		this.memberPlayNumber = memberPlayNumber;
 	}
 
-	public String getMemberWinRate() {
+	public int getMemberWinRate() {
 		return memberWinRate;
 	}
 
-	public void setMemberWinRate(String memberWinRate) {
+	public void setMemberWinRate(int memberWinRate) {
 		this.memberWinRate = memberWinRate;
 	}
 

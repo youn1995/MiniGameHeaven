@@ -1,8 +1,10 @@
 package updowngame;
 
+import database.MemberService;
+import database.MemberServiceImpl;
+
 public class UpDownGameApp {
 	int memberId;
-	
 	
 
 	public UpDownGameApp(int memberId) {
@@ -18,7 +20,8 @@ public class UpDownGameApp {
 	public void ranking(int playtime, int scoreSum) {
 		System.out.println("Your Winrate: " + (int) scoreSum/playtime*100 +"%");
 		if(memberId != 0) {
-			
+			MemberService service = new MemberServiceImpl();
+			service.updatingPlaytime(memberId, playtime, scoreSum);
 		}
 	}
 }

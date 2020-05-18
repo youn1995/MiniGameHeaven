@@ -11,5 +11,7 @@ public interface MemberService {
 	public void removeMember(String userId);
 
 	public int findingMember(String userid, String userpw);
+
+	public void updatingPlaytime(int memid, int playtime, int winrate);
 	
 }

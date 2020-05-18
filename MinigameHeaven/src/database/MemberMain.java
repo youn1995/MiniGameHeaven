@@ -27,7 +27,7 @@ public class MemberMain {
 	}
 
 	public void insertUser() {
-		System.out.println("Create department");
+		System.out.println("Create Account");
 		System.out.print("Enter User ID > ");
 		String userid = scn.nextLine();
 		System.out.print("Enter User password > ");
