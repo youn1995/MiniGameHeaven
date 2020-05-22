@@ -35,6 +35,7 @@ public class StartPage {
 						MemberMain membermain = new MemberMain();
 						membermain.execute();
 					} else if (loginMenuSel == 4) {
+						System.out.println("GoodBye");
 						break;
 					}
 				}

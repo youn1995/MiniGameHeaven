@@ -56,7 +56,7 @@ public class MemberMain {
 	}
 
 	public void updateUser() {
-
+		System.out.println();
 	}
 	int checkYesNo() {
 		int checkInput = 0;
