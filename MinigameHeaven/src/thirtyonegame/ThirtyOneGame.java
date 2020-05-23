@@ -102,11 +102,14 @@ public class ThirtyOneGame {
 		return resultOfRPS;
 	}// end of gameSet()
 
-	void gamePlay(int resultOfRPS) {
+	int[] gamePlay(int resultOfRPS) {
 		System.out.println("You Can Choose 1~3 to insert");
 		System.out.println("if you choose 2 the number will insert n, n+1");
 		int sum = 1;
 		int selectNum;
+		int playtime =0;
+		int scoreSum =0;
+		
 		if (resultOfRPS == 1) {
 			while (sum <= 31) {
 				System.out.print("INSERT(1~3) > ");
@@ -153,10 +156,12 @@ public class ThirtyOneGame {
 				} else if (sum == 31) {
 					System.out.println(sum + "!");
 					System.out.println("YOU WIN");
+					scoreSum++;
 					break;
 				}
 			} // end of while
 			System.out.println("-----------------------");
+			playtime++;
 		} else if (resultOfRPS == 2) {
 			while (sum <= 31) {
 				System.out.println("COM");
@@ -184,6 +189,7 @@ public class ThirtyOneGame {
 				} else if (sum == 31) {
 					System.out.println(sum + "!");
 					System.out.println("YOU WIN");
+					scoreSum++;
 					break;
 				}
 				System.out.print("INSERT(1~3) > ");
@@ -208,7 +214,13 @@ public class ThirtyOneGame {
 				
 			} // end of while
 			System.out.println("-----------------------");
+			playtime++;
 		}
-
+		
+		int[] totalResult = new int[2];
+		totalResult[0] = playtime;
+		totalResult[1] = scoreSum;
+		System.out.println(playtime + ", "+scoreSum);
+		return totalResult;
 	}// end of gamePlay
 }// end of class

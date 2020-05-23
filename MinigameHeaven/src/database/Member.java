@@ -5,7 +5,9 @@ public class Member {
 	String memberUserId;
 	String memberPW;
 	int memberPlayNumber;
+	int member31PlayNumber;
 	int memberWinRate;
+	double memberRankingPer;
 	
 	public Member() {
 		
@@ -33,6 +35,10 @@ public class Member {
 		this.memberWinRate = memberWinRate;
 	}
 
+	public int getMember31PlayNumber() {
+		return member31PlayNumber;
+	}
+
 	public int getMemberId() {
 		return memberId;
 	}
@@ -57,8 +63,8 @@ public class Member {
 		return memberPlayNumber;
 	}
 
-	public void setMemberPlayNumber(int memberPlayNumber) {
-		this.memberPlayNumber = memberPlayNumber;
+	public void setMember31PlayNumber(int member31PlayNumber) {
+		this.member31PlayNumber = member31PlayNumber;
 	}
 
 	public int getMemberWinRate() {
@@ -72,6 +78,14 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [memberId=" + memberId + ", memberUserId=" + memberUserId + ", memberPW=" + memberPW + "]";
+	}
+
+	public double getMemberRankingPer() {
+		return memberRankingPer;
+	}
+
+	public void setMemberRankingPer(double memberRankingPer) {
+		this.memberRankingPer = memberRankingPer;
 	}
 	
 	

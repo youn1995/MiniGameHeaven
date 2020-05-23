@@ -1,5 +1,7 @@
 package database;
 
+import java.util.List;
+
 public class MemberServiceImpl implements MemberService {
 	MemberDAO dao = new MemberDAO();
 
@@ -41,7 +43,14 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void updatingPlaytime(int memid, int playtime, int winrate) {
-		dao.updateMemberRate(memid, playtime, winrate);
+		dao.updateMemberRate31(memid, playtime, winrate);
 	}
+
+	@Override
+	public List<Member> ranking31_10List() {
+		return dao.getMember31Ranking10List();
+	}
+	
+	
 
 }
