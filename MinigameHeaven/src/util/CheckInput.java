@@ -41,5 +41,9 @@ public class CheckInput {
 	    for (int i = 0; i < 80; i++)
 	      System.out.println("");
 	  }
+	
+	public static void continueNext() {
+		scn.nextLine();
+	}
 
 }

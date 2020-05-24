@@ -15,5 +15,7 @@ public interface MemberService {
 
 	public void updatingPlaytime(int memid, int playtime, int winrate); //for ranking
 	
-	public List<Member> ranking31_10List();
+	public List<Member> ranking10List(int gameNum);
+	
+	public Member finfingMemberRanking(int memId, int gameNum);
 }

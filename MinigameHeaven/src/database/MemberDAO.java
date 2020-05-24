@@ -96,10 +96,14 @@ public class MemberDAO {
 				Member member = new Member(rs.getInt("mem_id"), rs.getString("mem_userid"), rs.getString("mem_passwd"));
 				members.add(member);
 			}
+			return members.get(0);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
+		} catch (IndexOutOfBoundsException e1) {
+			return null;
 		}
-		return members.get(0);
+
 	}
 
 	public void updateMemberRateUpdown(int memberId, int memberPlaytime, int memberWinRate) {
@@ -186,44 +190,95 @@ public class MemberDAO {
 		}
 	}
 
-	public List<Member> getMember31Ranking10List() {
+	public List<Member> getMemberRanking10List(int gameNum) {
 		List<Member> members = new ArrayList<>();
-		String sql = "select mem_userid, mem_31playtime ,mem_31winrate, \n" + 
-				"       round((mem_31winrate/replace(mem_31playtime, 0, 1)*100),2) as ranking \n" + 
-				"from (select mem_userid,mem_31playtime ,mem_31winrate, \n" + 
-				"             round((mem_31winrate/replace(mem_31playtime, 0, 1)*100),2) as ran \n" + 
-				"     from member\n" + 
-				"     order by ran desc, mem_31playtime desc) m\n" + 
-				"where rownum < 11";
+		String sql1 = "select mem_userid, mem_updownplaytime ,mem_updownwinrate, \n"
+				+ "       round((mem_updownwinrate/replace(mem_updownplaytime, 0, 1)*100),2) as ranking \n"
+				+ "from (select mem_userid,mem_updownplaytime ,mem_updownwinrate, \n"
+				+ "             round((mem_updownwinrate/replace(mem_updownplaytime, 0, 1)*100),2) as ran \n"
+				+ "     from member\n" + "     order by ran desc, mem_updownplaytime desc) m\n" + "where rownum < 11";
+
+		String sql2 = "select mem_userid, mem_31playtime ,mem_31winrate, \n"
+				+ "       round((mem_31winrate/replace(mem_31playtime, 0, 1)*100),2) as ranking \n"
+				+ "from (select mem_userid,mem_31playtime ,mem_31winrate, \n"
+				+ "             round((mem_31winrate/replace(mem_31playtime, 0, 1)*100),2) as ran \n"
+				+ "     from member\n" + "     order by ran desc, mem_31playtime desc) m\n" + "where rownum < 11";
 		conn = getConnect();
 		try {
-			pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery();
+			if (gameNum == 1) {
+				pstmt = conn.prepareStatement(sql1);
+				ResultSet rs = pstmt.executeQuery();
 
-			while (rs.next()) {
-				Member member = new Member();
-				member.setMemberUserId(rs.getString("mem_userid"));
-				member.setMember31PlayNumber(rs.getInt("mem_31playtime"));
-				member.setMemberRankingPer(rs.getDouble("ranking"));
-				members.add(member);
+				while (rs.next()) {
+					Member member = new Member();
+					member.setMemberUserId(rs.getString("mem_userid"));
+					member.setMemberPlayNumber(rs.getInt("mem_updownplaytime"));
+					member.setMemberRankingPer(rs.getDouble("ranking"));
+					members.add(member);
+				}
+			} else if (gameNum == 2) {
+				pstmt = conn.prepareStatement(sql2);
+				ResultSet rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+					Member member = new Member();
+					member.setMemberUserId(rs.getString("mem_userid"));
+					member.setMemberPlayNumber(rs.getInt("mem_31playtime"));
+					member.setMemberRankingPer(rs.getDouble("ranking"));
+					members.add(member);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return members;
 	}
-	
-	public Member findMemberRanking(int memId) {
+
+	public Member findMemberRanking(int memId, int gameNum) {
 		List<Member> members = new ArrayList<>();
-		String sql = String.format("select * from member where mem_id =%d",
-				memId);
+		String sql1 = String
+				.format("with rank as (select rownum as ranknum, mem_id, mem_updownplaytime ,mem_updownwinrate,\n"
+						+ "round((mem_updownwinrate/replace(mem_updownplaytime, 0, 1)*100),2) as ranking\n"
+						+ "from (select mem_id, mem_updownplaytime ,mem_updownwinrate,\n"
+						+ "round((mem_updownwinrate/replace(mem_updownplaytime, 0, 1)*100),2) as ran\n"
+						+ "from member\n" + "order by ran desc, mem_updownplaytime desc))\n"
+						+ "select ranknum, mem_id, mem_updownplaytime, mem_updownwinrate, ranking\n" + "from rank\n"
+						+ "where mem_id = %d", memId);
+
+		String sql2 = String.format("with rank as (select rownum as ranknum, mem_id, mem_31playtime ,mem_31winrate,\n"
+				+ "round((mem_31winrate/replace(mem_31playtime, 0, 1)*100),2) as ranking\n"
+				+ "from (select mem_id, mem_31playtime ,mem_31winrate,\n"
+				+ "round((mem_31winrate/replace(mem_31playtime, 0, 1)*100),2) as ran\n" + "from member\n"
+				+ "order by ran desc, mem_31playtime desc))\n"
+				+ "select ranknum, mem_id, mem_31playtime, mem_31winrate, ranking\n" + "from rank\n"
+				+ "where mem_id = %d", memId);
+
 		conn = getConnect();
 		try {
-			pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				Member member = new Member(rs.getInt("mem_id"), rs.getString("mem_userid"), rs.getString("mem_passwd"));
-				members.add(member);
+			if (gameNum == 1) {
+				pstmt = conn.prepareStatement(sql1);
+				ResultSet rs = pstmt.executeQuery();
+				while (rs.next()) {
+
+					Member member = new Member();
+					member.setMemberPlayNumber(rs.getInt("mem_updownplaytime"));
+					member.setMemberWinRate(rs.getInt("mem_updownwinrate"));
+					member.setMemberRankingPer(rs.getDouble("ranking"));
+					member.setRowNum(rs.getInt("ranknum"));
+					members.add(member);
+				}
+			} else if (gameNum == 2) {
+				pstmt = conn.prepareStatement(sql2);
+				ResultSet rs = pstmt.executeQuery();
+				while (rs.next()) {
+
+					Member member = new Member();
+					member.setMemberPlayNumber(rs.getInt("mem_31playtime"));
+					member.setMemberWinRate(rs.getInt("mem_31winrate"));
+					member.setMemberRankingPer(rs.getDouble("ranking"));
+					member.setRowNum(rs.getInt("ranknum"));
+					members.add(member);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

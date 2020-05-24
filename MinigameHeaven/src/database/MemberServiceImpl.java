@@ -47,8 +47,14 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<Member> ranking31_10List() {
-		return dao.getMember31Ranking10List();
+	public List<Member> ranking10List(int gameNum) {
+		return dao.getMemberRanking10List(gameNum);
+	}
+
+	@Override
+	public Member finfingMemberRanking(int memId, int gameNum) {
+		return dao.findMemberRanking(memId, gameNum);
+		
 	}
 	
 	

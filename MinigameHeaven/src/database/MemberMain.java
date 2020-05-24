@@ -26,7 +26,7 @@ public class MemberMain {
 			}
 		}
 	}
-	
+
 	public void adminAccountExecute() {
 		while (true) {
 			System.out.println("----------Account setting----------");
@@ -41,7 +41,7 @@ public class MemberMain {
 			} else if (userInput == 2) {
 				updateUser();
 			} else if (userInput == 3) {
-				
+
 			} else if (userInput == 4) {
 				break;
 			}
@@ -104,29 +104,31 @@ public class MemberMain {
 		System.out.println("Do you want to change your password?");
 	}
 
-	public void ranking(int menuNum, int gameNum) {
-		
-		if (menuNum == 1) {
-			if (gameNum == 1) {System.out.println("Top10");
-				int rank = 1;
-				List<Member> members = service.ranking31_10List();
-				System.out.println("Top10");
-				System.out.println("Rank   UserId   WinRate  Palytime");
-				for(Member mem :members) {
-					System.out.println(CheckInput.convertOrdinal(rank)+" "+mem.getMemberUserId()
-					+" "+mem.getMemberRankingPer()+" "+mem.getMember31PlayNumber());
-					rank++;
-				}
-			}else if(gameNum == 2) {
-				
-			}
-		} else if (menuNum == 2) {
-			if(gameNum == 1) {
-				
-			} else if(gameNum == 2) {
-				
-			}
-		}
+	public void userRanking(int memId, int gameNum) {
+// menuNum 1 - top10rank, 2 - userRank, gameNum 1 - updown, 2 - 31
+		Member member = service.finfingMemberRanking(memId, gameNum);
+		System.out.println("     Rank   WinRate  playtime win");
+		System.out.print("Your Rank is ");
+		System.out.print(CheckInput.convertOrdinal(member.getRowNum()));
+		System.out.print(" " + member.getMemberRankingPer());
+		System.out.print(" " + member.getMemberPlayNumber());
+		System.out.print(" " + member.memberWinRate);
+		System.out.println();
+
 	}
 
+	public void top10Ranking(int gameNum) {
+
+		System.out.println("Top10");
+		int rank = 1;
+		List<Member> members = service.ranking10List(gameNum);
+		System.out.println("Top10");
+		System.out.printf("%10s %10s %7s %10s %n","Rank" ,  "UserId"  , "WinRate" , "Palytime");
+		for (Member mem : members) {
+			System.out.printf("%s %s %.2f %d %n",CheckInput.convertOrdinal(rank), mem.getMemberUserId(),
+					+ mem.getMemberRankingPer(),mem.getMemberPlayNumber());
+			rank++;
+		}
+
+	}
 }

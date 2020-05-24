@@ -28,6 +28,8 @@ public class StartPage {
 						memId = memberMain.loginExecute();
 					}
 					System.out.println("--------------------------------");
+					System.out.println("           Main Page");
+					System.out.println("--------------------------------");
 					System.out.println("1.Game Start");
 					System.out.println("2.Ranking");
 					System.out.println("3.Account Setting");
@@ -48,7 +50,7 @@ public class StartPage {
 						
 					} else if (loginMenuSel == 4) {
 						System.out.println("--------------------------------");
-						System.out.println("GoodBye");
+						System.out.println("            GoodBye");
 						System.out.println("--------------------------------");
 						breakingPoint = 1;
 						break;

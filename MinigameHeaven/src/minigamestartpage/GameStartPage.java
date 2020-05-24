@@ -9,6 +9,8 @@ public class GameStartPage {
 	public void gameList(int memId) {
 		while (true) {
 			System.out.println("-------------------------");
+			System.out.println("       List of game");
+			System.out.println("-------------------------");
 			System.out.println("1.Updown");
 			System.out.println("2.Thirtyone");
 			System.out.println("3.Return to menu");

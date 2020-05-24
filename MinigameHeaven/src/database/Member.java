@@ -1,14 +1,26 @@
 package database;
 
 public class Member {
+	int rowNum;
 	int memberId;
 	String memberUserId;
 	String memberPW;
 	int memberPlayNumber;
-	int member31PlayNumber;
 	int memberWinRate;
 	double memberRankingPer;
 	
+	public int getRowNum() {
+		return rowNum;
+	}
+
+	public void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
+	}
+
+	public void setMemberPlayNumber(int memberPlayNumber) {
+		this.memberPlayNumber = memberPlayNumber;
+	}
+
 	public Member() {
 		
 	}
@@ -35,9 +47,6 @@ public class Member {
 		this.memberWinRate = memberWinRate;
 	}
 
-	public int getMember31PlayNumber() {
-		return member31PlayNumber;
-	}
 
 	public int getMemberId() {
 		return memberId;
@@ -61,10 +70,6 @@ public class Member {
 	
 	public int getMemberPlayNumber() {
 		return memberPlayNumber;
-	}
-
-	public void setMember31PlayNumber(int member31PlayNumber) {
-		this.member31PlayNumber = member31PlayNumber;
 	}
 
 	public int getMemberWinRate() {
