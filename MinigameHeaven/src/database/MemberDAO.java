@@ -13,7 +13,7 @@ public class MemberDAO {
 	PreparedStatement pstmt = null;
 
 	public Connection getConnect() {
-		String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, "hr", "hr");
@@ -105,6 +105,7 @@ public class MemberDAO {
 		}
 
 	}
+	
 
 	public void updateMemberRateUpdown(int memberId, int memberPlaytime, int memberWinRate) {
 		Member[] members = new Member[1];

@@ -9,18 +9,6 @@ public class Member {
 	int memberWinRate;
 	double memberRankingPer;
 	
-	public int getRowNum() {
-		return rowNum;
-	}
-
-	public void setRowNum(int rowNum) {
-		this.rowNum = rowNum;
-	}
-
-	public void setMemberPlayNumber(int memberPlayNumber) {
-		this.memberPlayNumber = memberPlayNumber;
-	}
-
 	public Member() {
 		
 	}
@@ -93,5 +81,16 @@ public class Member {
 		this.memberRankingPer = memberRankingPer;
 	}
 	
-	
+	public int getRowNum() {
+		return rowNum;
+	}
+
+	public void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
+	}
+
+	public void setMemberPlayNumber(int memberPlayNumber) {
+		this.memberPlayNumber = memberPlayNumber;
+	}
+
 }
