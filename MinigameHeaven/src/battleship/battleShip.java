@@ -7,13 +7,13 @@ public class battleShip {
 	int frigate2; //size 3
 	int airCraftCarrier; // size 5
 	int submarine; // size 2
-	String battleShipLocation = "D4";
+	static String battleShipLocation = "D4";
 	
 	
 	public static void main(String[] args) {
 		String[][] board = new String[10][10];
 		
-		
+		System.out.println(battleShipLocation.length());
 		for(int i =0; i<10; i++) {
 			if(i == 0) {
 				System.out.print("  ");
